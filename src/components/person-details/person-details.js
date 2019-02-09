@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import './person-details.css';
 
-import SwapiService from '../../services/swapi'
+import SwapiService from '../../services/swapi';
+import Spinner from '../spinner';
 
 export default class PersonDetails extends Component {
 
@@ -28,44 +29,57 @@ export default class PersonDetails extends Component {
     if (!personId) {
       return;
     }
+    this.setState({
+      isLoading: true
+    })
     this.swapiService
       .getPerson(personId)
       .then((person) => {
-        this.setState({ person })
-      })
+        this.setState({
+          person: person,
+          isLoading: false
+        })
+      })   
   }
 
   render() {
-    
-    if (!this.state.person) {
-      return <span>Select person from a list</span>
-    }
 
-    const { id, name, gender, birthYear, eyeColor } = this.state.person;
+    const {person, isLoading} = this.state; 
+
+    const content = isLoading ? <Spinner /> : <PersonView person={person} />;
 
     return (
       <div className="person-details card">
-        <img className="person-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}/>
-
-        <div className="card-body">
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
-          </ul>
-        </div>
+        {content}
       </div>
     )
   }
+}
+
+const PersonView = ({ person }) => {
+  const { id, name, gender, birthYear, eyeColor } = person;
+  return (
+    <React.Fragment>
+      <img className="person-image"
+        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+
+      <div className="card-body">
+        <h4>{name}</h4>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">
+            <span className="term">Gender</span>
+            <span>{gender}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Birth Year</span>
+            <span>{birthYear}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Eye Color</span>
+            <span>{eyeColor}</span>
+          </li>
+        </ul>
+      </div>
+    </React.Fragment>
+  )
 }
