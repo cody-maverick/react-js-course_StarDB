@@ -4,6 +4,7 @@ import './person-details.css';
 
 import SwapiService from '../../services/swapi';
 import Spinner from '../spinner';
+import ErrorButton from '../error-btn/error-btn';
 
 export default class PersonDetails extends Component {
 
@@ -79,6 +80,7 @@ const PersonView = ({ person }) => {
             <span>{eyeColor}</span>
           </li>
         </ul>
+        <ErrorButton/>
       </div>
     </React.Fragment>
   )
