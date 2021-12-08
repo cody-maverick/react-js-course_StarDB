@@ -4,13 +4,15 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
 import ItemList from '../item-list'
-import ItemDetails, { Record } from '../item-details/item-details'
+import ItemDetails from '../item-details/item-details'
+import { Record } from "../item-details/record";
 import ErrorBoundry from '../error-boundry'
 
 import './app.css';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from '../../services/swapi';
 import Row from '../row';
+import {PersonList} from "../sw-component";
 
 export default class App extends Component {
 
@@ -22,7 +24,6 @@ export default class App extends Component {
   componentDidCatch() {
     this.setState({ hasError: true })
   }
-
 
   render() {
 
@@ -48,7 +49,6 @@ export default class App extends Component {
         <Record field="model" label="Model" />
         <Record field="length" label="Length" />
         <Record field="costInCredits" label="Cost" />
-
       </ItemDetails>
     )
 
@@ -57,8 +57,13 @@ export default class App extends Component {
       <ErrorBoundry>
         <div className="container">
           <Header />
-          {/* <RandomPlanet /> */}
-          {/* <PeoplePage /> */}
+           <RandomPlanet />
+           <PeoplePage />
+
+            <PersonList>
+              {({ name }) => <span>{name}</span>}
+            </PersonList>
+            {/*<PeopleDetail/>*/}
 
           <ItemList
             getData={getAllPeople}

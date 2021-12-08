@@ -1,1 +1,1 @@
-Star Wars DB with swapi.co
+Star Wars DB with swapi.dev

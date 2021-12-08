@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { withData } from '../hoc-helpers';
 
 import './item-list.css';
 import Spinner from '../spinner';
 import SwapiService from '../../services/swapi'
 
 const ItemList = (props) => {
-
   const { data, onItemSelected, children: renderLabel } = props;
-
-  const items = data.map((item) => {
+  const items = data ? data.map((item) => {
     const { id } = item;
     const label = renderLabel(item)
 
@@ -21,9 +18,7 @@ const ItemList = (props) => {
         {label}
       </li>
     )
-  })
-
-
+  }) : ''
 
   return (
     <ul className="item-list list-group">
@@ -32,8 +27,4 @@ const ItemList = (props) => {
   );
 }
 
-const { getAllPeople } = new SwapiService();
-
-
-
-export default withData(ItemList, getAllPeople)
+export default ItemList

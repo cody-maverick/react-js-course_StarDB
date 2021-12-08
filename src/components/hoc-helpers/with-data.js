@@ -5,7 +5,7 @@ import ErrorIndicator from '../error-indicator'
 const withData = (View, getData) => {
   return class extends Component {
     state = {
-      itemList: null
+      data: null
     };
 
     componentDidMount() {
@@ -18,7 +18,6 @@ const withData = (View, getData) => {
     }
 
     render() {
-
       const { data } = this.state;
       if (!data) {
         return <Spinner />

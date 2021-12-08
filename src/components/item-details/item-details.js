@@ -6,26 +6,12 @@ import SwapiService from '../../services/swapi';
 import Spinner from '../spinner';
 import ErrorButton from '../error-btn/error-btn';
 
-const Record = ({ item, field, label }) => {
-  return (
-    <li className="list-group-item">
-      <span className="term">{label}</span>
-      <span>{item[field]}</span>
-    </li>
-  )
-};
-
-export {
-  Record
-};
-
 export default class ItemDetails extends Component {
 
   swapiService = new SwapiService;
 
   state = {
     item: null,
-    isLoading: true,
     image: null
   }
 
@@ -35,7 +21,10 @@ export default class ItemDetails extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
-      this.updatePerson();
+      this.setState({
+        item: null
+      })
+      this.updateItem();
     }
   }
 
@@ -49,13 +38,12 @@ export default class ItemDetails extends Component {
       .then((item) => {
         this.setState({
           item: item,
-          image: getImageUrl(item)
+          image: getImageUrl(item),
         })
       })
   }
 
   render() {
-
     const { item, image } = this.state;
     if (!item) {
       return <Spinner />;
@@ -79,7 +67,7 @@ export default class ItemDetails extends Component {
               })
             }
           </ul>
-          <ErrorButton />
+          {/*<ErrorButton />*/}
         </div>
       </div>
     )
