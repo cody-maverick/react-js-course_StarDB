@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './item-list.css';
-import Spinner from '../spinner';
-import SwapiService from '../../services/swapi'
 
 const ItemList = (props) => {
   const { data, onItemSelected, children: renderLabel } = props;
